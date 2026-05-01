@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================================
+   DESIGN SYSTEM — "Gerações na Indústria"
+   -------------------------------------------------------------
+   Estética cinematográfica industrial. Todas as cores em HSL.
+   Cada módulo redefine variáveis de tema (--accent, --accent-2,
+   --hue, etc) via classes .theme-mod-N aplicadas no <main>.
+   ============================================================= */
+
+@layer base {
+  :root {
+    /* Superfícies neutras (escuro por padrão — visual cinemático) */
+    --background: 220 12% 6%;
+    --foreground: 40 30% 96%;
+
+    --card: 220 14% 9%;
+    --card-foreground: 40 30% 96%;
+
+    --popover: 220 14% 9%;
+    --popover-foreground: 40 30% 96%;
+
+    /* Acento PADRÃO (dourado industrial). Cada módulo sobrescreve. */
+    --primary: 44 96% 52%;
+    --primary-foreground: 220 14% 8%;
+
+    --secondary: 220 10% 14%;
+    --secondary-foreground: 40 30% 96%;
+
+    --muted: 220 10% 14%;
+    --muted-foreground: 40 8% 65%;
+
+    --accent: 44 96% 52%;
+    --accent-foreground: 220 14% 8%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 40 30% 96%;
+
+    /* Sinais de feedback didático (quizzes) — independentes do tema do módulo. */
+    --success: 142 70% 45%;
+    --success-foreground: 220 14% 8%;
+    --error:   0 78% 55%;
+    --error-foreground: 40 30% 96%;
+
+    --border: 220 10% 16%;
+    --input: 220 10% 16%;
+    --ring: 44 96% 52%;
+
+    --radius: 0.25rem; /* cantos firmes, estética industrial */
+
+    /* Tokens semânticos extras do projeto */
+    --ink: 220 14% 6%;            /* preto profundo p/ blocos */
+    --steel: 220 8% 22%;           /* cinza aço */
+    --steel-2: 220 8% 32%;
+    --bone: 40 25% 92%;            /* off-white */
+    --signal: 44 96% 52%;          /* sinalização industrial */
+    --signal-2: 18 90% 52%;        /* alerta laranja */
+
+    /* Gradientes reutilizáveis (mesclar imagens com fundo) */
+    --grad-vignette: radial-gradient(ellipse at center, transparent 0%, hsl(var(--background) / 0.4) 60%, hsl(var(--background)) 100%);
+    --grad-fade-bottom: linear-gradient(180deg, transparent 0%, hsl(var(--background) / 0.6) 60%, hsl(var(--background)) 100%);
+    --grad-fade-top: linear-gradient(0deg, transparent 0%, hsl(var(--background) / 0.6) 60%, hsl(var(--background)) 100%);
+    --grad-cinema: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--background) / 0.3) 50%, hsl(var(--accent) / 0.15) 100%);
+
+    /* Sombras */
+    --shadow-deep: 0 30px 60px -20px hsl(0 0% 0% / 0.6);
+    --shadow-glow: 0 0 60px hsl(var(--accent) / 0.35);
+
+    /* Transições padrão */
+    --ease-out-cinema: cubic-bezier(0.22, 1, 0.36, 1);
+    --dur-slow: 700ms;
+    --dur-med: 400ms;
+    --dur-fast: 200ms;
+
+    --sidebar-background: 220 14% 8%;
+    --sidebar-foreground: 40 25% 90%;
+    --sidebar-primary: 44 96% 52%;
+    --sidebar-primary-foreground: 220 14% 8%;
+    --sidebar-accent: 220 10% 14%;
+    --sidebar-accent-foreground: 40 25% 90%;
+    --sidebar-border: 220 10% 16%;
+    --sidebar-ring: 44 96% 52%;
+  }
+
+  /* =====================================================
+     TEMAS POR MÓDULO
+     Cada módulo recebe uma paleta de acento distinta para
+     reforçar identidade visual sem trocar a fonte/estrutura.
+     Aplicar via <main className="theme-mod-1"> nas páginas.
+     ===================================================== */
+  .theme-mod-1 { --accent: 44 96% 52%;  --primary: 44 96% 52%;  --ring: 44 96% 52%; }   /* Introdução — dourado */
+  .theme-mod-2 { --accent: 0 78% 55%;   --primary: 0 78% 55%;   --ring: 0 78% 55%; }    /* Etarismo — vermelho alerta */
+  .theme-mod-3 { --accent: 200 90% 55%; --primary: 200 90% 55%; --ring: 200 90% 55%; }  /* Gerações — azul */
+  .theme-mod-4 { --accent: 28 80% 55%;  --primary: 28 80% 55%;  --ring: 28 80% 55%; }   /* Boomers — sépia/laranja */
+  .theme-mod-5 { --accent: 160 60% 45%; --primary: 160 60% 45%; --ring: 160 60% 45%; }  /* Gen X — verde aço */
+  .theme-mod-6 { --accent: 280 70% 60%; --primary: 280 70% 60%; --ring: 280 70% 60%; }  /* Millennials — roxo */
+  .theme-mod-7 { --accent: 320 85% 60%; --primary: 320 85% 60%; --ring: 320 85% 60%; }  /* Gen Z — magenta */
+  .theme-mod-8 { --accent: 180 70% 50%; --primary: 180 70% 50%; --ring: 180 70% 50%; }  /* Comunicação — ciano */
+  .theme-mod-9 { --accent: 90 60% 50%;  --primary: 90 60% 50%;  --ring: 90 60% 50%; }   /* Boas práticas — verde-lima */
+
+  * { @apply border-border; }
+html, body, #root {
+  @apply h-full;
+  max-width: 100%;
+}
+
+#root {
+  overflow-x: hidden;
+  overflow-y: auto; /* o scroll agora vive aqui */
+}
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  /* Tipografia: display condensada + corpo neo-grotesque.
+     Carregamos via @import para evitar dependência de <link>. */
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+@layer base {
+  .font-display { font-family: 'Barlow Condensed', system-ui, sans-serif; letter-spacing: -0.01em; }
+  .font-body    { font-family: 'Inter', system-ui, sans-serif; }
+  .font-mono    { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+  body { font-family: 'Inter', system-ui, sans-serif; }
+  h1, h2, h3, .display { font-family: 'Barlow Condensed', system-ui, sans-serif; }
+}
+
+/* =====================================================
+   UTILITÁRIOS DE COMPOSIÇÃO
+   ===================================================== */
+@layer utilities {
+  /* Texto gigante editorial (responsivo via clamp) */
+  .text-cinema     { font-size: clamp(2.5rem, 8vw, 7rem); line-height: 0.92; font-weight: 800; }
+  .text-cinema-sm  { font-size: clamp(1.75rem, 5vw, 4rem); line-height: 0.95; font-weight: 700; }
+  .text-eyebrow    { font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 600; }
+
+  /* =====================================================
+     TIPOGRAFIA FLUIDA
+     -----------------------------------------------------
+     NOTA ACADÊMICA: usamos clamp(min, preferred, max) para
+     escalar a fonte continuamente entre breakpoints, em vez
+     de saltos discretos (sm/md/lg). Isso melhora legibilidade
+     em qualquer dispositivo — do celular pequeno ao desktop —
+     e reduz a chance de "viúvas" e quebras feias de linha.
+     ===================================================== */
+  .text-fluid-h2    { font-size: clamp(1.75rem, 1.2rem + 2.6vw, 3.25rem); }
+  .text-fluid-h3    { font-size: clamp(1.25rem, 1rem + 1.2vw, 1.875rem); }
+  .text-fluid-lead  { font-size: clamp(1.5rem, 1.05rem + 2.2vw, 2.75rem); }
+  .text-fluid-body  { font-size: clamp(1rem, 0.92rem + 0.4vw, 1.18rem); }
+  .text-fluid-quote { font-size: clamp(1.75rem, 1.1rem + 3.2vw, 3.5rem); }
+
+  /* Mesclas de imagem com o fundo (efeito "imagem encaixa no fundo") */
+  .blend-cinema    { mix-blend-mode: luminosity; opacity: 0.55; }
+  .blend-screen    { mix-blend-mode: screen; opacity: 0.7; }
+  .blend-overlay   { mix-blend-mode: overlay; opacity: 0.8; }
+
+  .mask-fade-bottom { -webkit-mask-image: linear-gradient(180deg, #000 30%, transparent 100%); mask-image: linear-gradient(180deg, #000 30%, transparent 100%); }
+  .mask-fade-top    { -webkit-mask-image: linear-gradient(0deg, #000 30%, transparent 100%); mask-image: linear-gradient(0deg, #000 30%, transparent 100%); }
+  .mask-vignette    { -webkit-mask-image: radial-gradient(ellipse at center, #000 40%, transparent 100%); mask-image: radial-gradient(ellipse at center, #000 40%, transparent 100%); }
+
+  /* Grão sutil para reforçar tom industrial */
+  .noise::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/></svg>");
+    opacity: 0.06; mix-blend-mode: overlay;
+  }
+
+  /* Linha-guia industrial (decorativa) */
+  .rule-industrial { background-image: repeating-linear-gradient(90deg, hsl(var(--accent)) 0 8px, transparent 8px 16px); height: 2px; }
+
+  /* Hover sutil para cards */
+  .hover-lift { transition: transform var(--dur-med) var(--ease-out-cinema), box-shadow var(--dur-med) var(--ease-out-cinema); }
+  .hover-lift:hover { transform: translateY(-4px); box-shadow: var(--shadow-deep); }
+
+  /* Glow do acento */
+  .glow-accent { box-shadow: var(--shadow-glow); }
+
+  /* Texto stencil industrial */
+  .stencil { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; }
+}
+
+/* =====================================================
+   ANIMAÇÕES BASE (também via tailwind.config para classes)
+   ===================================================== */
+@layer base {
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+  @keyframes pan-bg {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+  @keyframes reveal-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+}
